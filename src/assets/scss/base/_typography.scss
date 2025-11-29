@@ -2,10 +2,11 @@
 
 h1,
 .h1 {
-    font-size: var(--step-5);
+    font-size: var(--step-8);
+    font-family: var(--font-family-special);
     line-height: 100%;
     color: var(--color-text);
-    font-weight: 700;
+    font-weight: 400;
     margin-bottom: 0.25em;
 
 }
@@ -68,17 +69,17 @@ p {
 }
 
 a {
-    color: var(--color-brand-500);
+    color: var(--primary-50);
     text-decoration: underline;
     text-underline-offset: 0.125em;
     transition: color 0.2s ease;
 
     &:hover {
-        color: var(--color-brand-600);
+        color: var(--primary-60);
     }
 
     &:focus {
-        outline: 2px solid var(--color-brand-500);
+        outline: 2px solid var(--primary-50);
         outline-offset: 2px;
     }
 }

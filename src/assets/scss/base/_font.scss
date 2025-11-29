@@ -1,15 +1,7 @@
-:root {
-    --font-system: Inter,
-        Roboto,
-        'Helvetica Neue',
-        'Arial Nova',
-        'Nimbus Sans',
-        Arial,
-        sans-serif;
-}
+// Font definitions using tokens
 
 body {
-    font-family: var(--font-system);
+    font-family: var(--font-family-default);
     color: var(--color-text);
     background: var(--color-bg);
 }

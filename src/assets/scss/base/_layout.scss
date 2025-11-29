@@ -1,0 +1,68 @@
+// Layout Utilities - Columns, Content Blocks, etc.
+
+/* Columns Grid System */
+.columns {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+}
+
+/* Prevent overflow in columns */
+.columns>div {
+    min-width: 0;
+    text-align: center;
+}
+
+.column>* {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+}
+
+.full .column>figcaption {
+    padding: 0;
+}
+
+/* Figure and Figcaption */
+figure figcaption {
+    grid-column: page;
+}
+
+:not(.full)>figcaption {
+    padding: var(--space-2xs) 0;
+}
+
+.full>figcaption {
+    padding: var(--space-2xs);
+}
+
+.multi-col-block .column figcaption {
+    padding: var(--space-2xs) 0 !important;
+}
+
+/* Content Blocks */
+.text-block p+h3,
+.text-block p+h4,
+.text-block p+h5,
+.text-block p+h6 {
+    margin-top: 2rem;
+}
+
+.text-block p+p {
+    margin-top: 1rem;
+}
+
+/* Media Items */
+.swiper-slide>*,
+.media-item>* {
+    display: inline-block;
+    margin: 0 !important;
+    width: 100%;
+}
+
+/* Responsive: Force single column on mobile */
+@media (max-width: 767px) {
+    .columns {
+        grid-template-columns: 1fr !important;
+    }
+}

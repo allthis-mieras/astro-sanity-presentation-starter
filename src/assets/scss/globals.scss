@@ -1,7 +1,9 @@
 // Base styles (import order matters)
-@import 'base/reset';
-@import 'base/tokens';
-@import 'base/utopia';
-@import 'base/font';
-@import 'base/typography';
-@import 'base/default';
+@use 'base/reset';
+@use 'base/tokens';
+@use 'base/utopia';
+@use 'base/font';
+@use 'base/typography';
+@use 'base/grid';
+@use 'base/layout';
+@use 'base/default';

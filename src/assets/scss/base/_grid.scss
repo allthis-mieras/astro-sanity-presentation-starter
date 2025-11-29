@@ -1,0 +1,122 @@
+// Responsive Breakout Grid System
+
+.page-layout,
+.full-width {
+    --minimum-content-padding: 1rem;
+    --full-max-width: 1fr;
+
+    /* Clamp-based max-widths */
+    --page-max-width: clamp(768px, calc(100vw - 4rem), calc(100vw - var(--space-2xl)));
+    --feature-max-width: clamp(720px, 71.43vw, 71.43%);
+    --popout-max-width: clamp(640px, 55.56vw, 55.56%);
+    --content-max-width: clamp(480px, 41.81vw, 41.81%);
+    --inset-content-max-width: clamp(420px, 26.98vw, 26.98%);
+
+    /* Track Sizes */
+    --full: minmax(var(--minimum-content-padding), 1fr);
+    --page: minmax(0, calc((var(--page-max-width) - var(--feature-max-width)) * 0.5));
+    --feature: minmax(0, calc((var(--feature-max-width) - var(--popout-max-width)) * 0.5));
+    --popout: minmax(0, calc((var(--popout-max-width) - var(--content-max-width)) * 0.5));
+    --content: minmax(0, calc((var(--content-max-width) - var(--inset-content-max-width)) * 0.5));
+    --inset-content: min(var(--inset-content-max-width), 100% - var(--minimum-content-padding) * 2);
+
+    display: grid;
+    grid-template-columns:
+        [full-start] var(--full) [page-start] var(--page) [feature-start] var(--feature) [popout-start] var(--popout) [content-start] var(--content) [inset-content-start] var(--inset-content) [inset-content-end] var(--content) [content-end] var(--popout) [popout-end] var(--feature) [feature-end] var(--page) [page-end] var(--full) [full-end];
+}
+
+/* Grid Column Classes */
+.full {
+    grid-column: full;
+}
+
+.full-start {
+    grid-column-start: full-start;
+}
+
+.full-end {
+    grid-column-end: full-end;
+}
+
+.page {
+    grid-column: page;
+}
+
+.page-start {
+    grid-column-start: page-start;
+}
+
+.page-end {
+    grid-column-end: page-end;
+}
+
+.feature {
+    grid-column: feature;
+}
+
+.feature-start {
+    grid-column-start: feature-start;
+}
+
+.feature-end {
+    grid-column-end: feature-end;
+}
+
+.popout {
+    grid-column: popout;
+}
+
+.popout-start {
+    grid-column-start: popout-start;
+}
+
+.popout-end {
+    grid-column-end: popout-end;
+}
+
+.content {
+    grid-column: content;
+}
+
+.content-start {
+    grid-column-start: content-start;
+}
+
+.content-end {
+    grid-column-end: content-end;
+}
+
+.inset-content {
+    grid-column: inset-content;
+}
+
+.inset-content-start {
+    grid-column-start: inset-content-start;
+}
+
+.inset-content-end {
+    grid-column-end: inset-content-end;
+}
+
+.full-width {
+    grid-column: full;
+}
+
+.full-content,
+.full-content-nopad {
+    grid-column: full;
+}
+
+.full-content {
+    padding-inline: var(--minimum-content-padding);
+}
+
+/* Page Layout Specific */
+.page-layout>*,
+.full-width>* {
+    grid-column: content;
+}
+
+.page-layout>* {
+    margin-block: var(--space-l);
+}
