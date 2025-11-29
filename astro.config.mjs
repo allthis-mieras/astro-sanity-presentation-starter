@@ -15,15 +15,7 @@ const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } = loadEnv(
 // https://astro.build/config
 export default defineConfig({
   adapter: netlify(),
-  vite: {
-    optimizeDeps: {
-      exclude: ["refractor"],
-      include: ["sanity > @sanity/ui", "sanity > @sanity/icons"],
-    },
-    ssr: {
-      noExternal: ["@sanity/astro"],
-    },
-  },
+  
   integrations: [
     sanity({
      projectId: PUBLIC_SANITY_PROJECT_ID,
