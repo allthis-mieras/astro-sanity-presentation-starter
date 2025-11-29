@@ -1,0 +1,279 @@
+---
+alwaysApply: true
+---
+
+# Cursor Rules — Astro + Sanity + Netlify + Utopia (SCSS) + Tailwind (opt-in)
+
+This project is a production-grade CMS-driven site.
+
+Stack:
+- Astro (SSR)
+- Sanity Studio v4
+- Netlify adapter
+- Utopia via npm (scss)
+- Tailwind (optional)
+- TypeScript strict
+
+---
+
+## Project Philosophy
+
+This project is SSR-first.
+Preview, draft-mode and Presentation tooling **must always work**.
+
+Optimise for:
+- CMS correctness
+- Preview stability
+- Token-based design
+- Minimal hydration
+- Maintainable structure
+
+Avoid:
+- Static evangelism
+- Client-only behaviour
+- Framework hype
+- Hidden magic
+
+---
+
+## Enforced Project Structure
+
+```
+src/
+  components/
+  layouts/
+  pages/
+  sanity/
+    lib/
+      load-query.ts
+      url-for-image.ts
+    schemaTypes/
+      index.ts
+      author.ts
+      blockContent.ts
+      category.ts
+      post.ts
+  styles/
+    utopia.scss
+    globals.scss
+```
+
+Never:
+- Fetch directly from Sanity inside UI components
+- Bypass `load-query.ts`
+- Hardcode preview logic
+- Mix CMS logic with layout logic
+
+---
+
+## Draft-Aware Data Access
+
+All Sanity queries MUST go through:
+
+```ts
+import { loadQuery } from '@/sanity/lib/load-query'
+```
+
+Never:
+- Call `client.fetch()` directly
+- Load published content during Presentation
+- Read drafts without perspective logic
+
+Preview must always:
+- Show drafts
+- Not affect production views
+
+---
+
+## Routing Discipline
+
+Astro routes define URL truth.
+
+If you change routing:
+- Update Sanity Presentation resolve config
+- Update front-end behaviour
+- Maintain stable URLs
+
+Never allow CMS and routes to drift.
+
+---
+
+## SANITY Schema Discipline
+
+All documents must include:
+- title
+- slug
+- preview config
+
+Naming:
+- Schema files: camelCase
+- Helpers: camelCase
+- Components: PascalCase
+
+Never:
+- Encode layout logic in schema
+- Store routing inside content
+- Use unnamed references
+
+---
+
+## Styling System — UTOPIA (MANDATORY)
+
+All sizing comes from **Utopia SCSS**.
+
+Utopia is imported via:
+
+```scss
+@use "node_modules/utopia-core-scss/src/utopia" as utopia;
+```
+
+### Primary Type Scale Setup
+
+```scss
+:root {
+  @include utopia.generateTypeScale((
+    "minWidth": 360,
+    "maxWidth": 1920,
+    "minFontSize": 18,
+    "maxFontSize": 18,
+    "minTypeScale": 1.2,
+    "maxTypeScale": 1.25,
+    "positiveSteps": 8,
+    "negativeSteps": 3,
+    "prefix": "step-",
+    "relativeTo": "viewport-width"
+  ));
+}
+```
+
+Never:
+- Define font sizes outside Utopia
+- Use inline clamp()
+- Hardcode px values
+- Duplicate token logic
+
+Always:
+- Reference Utopia variables
+- Use fluid sizes
+- Centralise scale
+
+---
+
+## Grid + Layout Tokens
+
+```scss
+:root {
+  --grid-max-width: 69.75rem; /* create and use CSS variable for this) */
+  --grid-gutter: var(--space-s-l);
+  --grid-columns: 12; /* create and use CSS variable for this) */
+}
+
+.u-container {
+  margin-inline: auto;
+  max-width: var(--grid-max-width);
+  padding-inline: var(--grid-gutter);
+}
+
+.u-grid {
+  display: grid;
+  gap: var(--grid-gutter);
+}
+```
+
+Never:
+- Hardcode layout spacing
+- Mix fixed units
+- Override container logic
+
+---
+
+## Tailwind (OPTIONAL)
+
+Tailwind is utility-only.
+
+Rules:
+- No @apply
+- No inline styling
+- No token duplication
+- Semantic grouping only
+
+Never:
+- Treat Tailwind as design system
+- Hardcode colors
+- Introduce magic numbers
+
+---
+
+## SSR Enforcement
+
+Hydration is opt-in.
+
+Allowed:
+- client:visible
+- client:idle
+- client:load
+
+Never:
+- Hydrate whole pages
+- Port layout into React
+
+---
+
+## SEO Discipline
+
+All metadata lives in Layout.
+
+Each page exposes:
+- title
+- description
+- canonical
+- OG
+
+Never:
+- Inline SEO per page
+- Duplicate head logic
+
+---
+
+## Environment Rules
+
+All env via:
+
+```
+import.meta.env
+```
+
+Never:
+- Commit secrets
+- Log tokens
+- Hardcode domains
+
+---
+
+## Validation Mindset
+
+Before coding:
+
+- Does preview work?
+- Do drafts stay isolated?
+- Is SSR respected?
+- Are tokens used?
+- Does routing still match CMS?
+
+---
+
+## Output Quality
+
+All output must be:
+
+- Type-safe
+- SSR-aware
+- Token-first
+- Simple
+- Maintainable
+
+No tutorials.
+No fluff.
+No shortcuts.
+
+This is a design system foundation.

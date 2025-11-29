@@ -22,6 +22,10 @@
     "react-dom": "^19.2.0",
     "react-is": "^19.2.0",
     "sanity": "^4.19.0",
-    "styled-components": "^6.1.19"
+    "styled-components": "^6.1.19",
+    "utopia-core-scss": "^1.3.0"
+  },
+  "devDependencies": {
+    "sass": "^1.94.2"
   }
 }

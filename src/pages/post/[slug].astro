@@ -1,5 +1,6 @@
 ---
 // ./src/pages/post/[slug].astro
+import Layout from "../../layouts/Layout.astro";
 import type { SanityDocument } from "@sanity/client";
 import { loadQuery } from "../../sanity/lib/load-query";
 import PortableText from "../../components/PortableText.astro";
@@ -26,5 +27,7 @@ const { data: post } = await loadQuery<{ title: string; body: any[] }>({
 });
 ---
 
-<h1>A post about {post.title}</h1>
-<PortableText portableText={post.body} />
+<Layout>
+  <h1>A post about {post.title}</h1>
+  <PortableText portableText={post.body} />
+</Layout>

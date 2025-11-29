@@ -1,0 +1,28 @@
+:root {
+    /* Brand */
+    --color-brand-500: hsl(221 78% 58%);
+    --color-brand-400: hsl(221 85% 65%);
+    --color-brand-600: hsl(221 70% 50%);
+
+    /* Neutrals */
+    --color-bg: hsl(0 0% 100%);
+    --color-surface: hsl(0 0% 97%);
+    --color-border: hsl(0 0% 85%);
+    --color-text: hsl(221 25% 15%);
+    --color-muted: hsl(221 15% 45%);
+
+    /* Feedback */
+    --color-success: hsl(145 70% 45%);
+    --color-warning: hsl(42 90% 55%);
+    --color-error: hsl(4 75% 55%);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-bg: hsl(221 20% 10%);
+        --color-surface: hsl(221 20% 14%);
+        --color-border: hsl(221 15% 25%);
+        --color-text: hsl(0 0% 96%);
+        --color-muted: hsl(221 10% 65%);
+    }
+}

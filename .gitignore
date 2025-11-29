@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# project structure documentation
+PROJECT_STRUCTURE.md
