@@ -1,18 +1,41 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import sanity from '@sanity/astro';
-import react from '@astrojs/react';
+import netlify from "@astrojs/netlify";
+import sanity from "@sanity/astro";
+import react from "@astrojs/react";
+
+import { loadEnv } from "vite";
+const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } = loadEnv(
+  process.env.NODE_ENV,
+  process.cwd(),
+  ""
+);
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [sanity({
-      projectId: 'ithwpxsc',
-      dataset: 'production',
-      useCdn: false, // See note on using the CDN
-      apiVersion: "2025-01-28", // insert the current date to access the latest version of the API
-          studioBasePath: '/studio' // If you want to access the Studio on a route
-
+  adapter: netlify(),
+  vite: {
+    optimizeDeps: {
+      exclude: ["refractor"],
+      include: ["sanity > @sanity/ui", "sanity > @sanity/icons"],
+    },
+    ssr: {
+      noExternal: ["@sanity/astro"],
+    },
+  },
+  integrations: [
+    sanity({
+      projectId: "ithwpxsc",
+      dataset: "production",
+      useCdn: false,
+      apiVersion: "2025-01-28",
+      studioBasePath: "/studio",
+      stega: {
+        studioUrl: "/studio",
+      },
     }),
-    react(),]
+
+    react(),
+  ],
 });

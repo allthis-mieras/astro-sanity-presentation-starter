@@ -12,6 +12,7 @@ export const postType = defineType({
     defineField({
       name: "slug",
       type: "slug",
+      validation: (Rule) => Rule.required(),
       options: {
         source: "title",
         maxLength: 96,

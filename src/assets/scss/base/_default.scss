@@ -2,41 +2,41 @@
 
 // Grid + Layout Tokens (volgens cursor rules)
 :root {
-    --grid-max-width: 69.75rem;
-    --grid-gutter: var(--space-m);
-    --grid-columns: 12;
+  --grid-max-width: 69.75rem;
+  --grid-gutter: var(--space-m);
+  --grid-columns: 12;
 }
 
 // Container utility
 .u-container {
-    margin-inline: auto;
-    max-width: var(--grid-max-width);
-    padding-inline: var(--grid-gutter);
+  margin-inline: auto;
+  max-width: var(--grid-max-width);
+  padding-inline: var(--grid-gutter);
 }
 
 // Grid utility
 .u-grid {
-    display: grid;
-    gap: var(--grid-gutter);
+  display: grid;
+  gap: var(--grid-gutter);
 }
 
 // Base layout
 body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 // Image defaults
 img {
-    height: auto;
-    display: block;
+  height: auto;
+  display: block;
 }
 
 // Button reset
 button {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
