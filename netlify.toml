@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Exclude PUBLIC_* variables from secrets scanning (they're meant to be public)
+  SECRETS_SCAN_OMIT_KEYS = "PUBLIC_SANITY_DATASET,PUBLIC_SANITY_PROJECT_ID"
+  # Exclude build output and other paths from scanning
+  SECRETS_SCAN_OMIT_PATHS = "dist/,.netlify/,.cursor/"
+
