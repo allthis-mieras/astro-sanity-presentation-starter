@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # project structure documentation
 PROJECT_STRUCTURE.md
+
+# Local Netlify folder
+.netlify

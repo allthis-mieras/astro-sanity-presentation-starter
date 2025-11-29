@@ -26,8 +26,8 @@ export default defineConfig({
   },
   integrations: [
     sanity({
-      projectId: "ithwpxsc",
-      dataset: "production",
+     projectId: PUBLIC_SANITY_PROJECT_ID,
+      dataset: PUBLIC_SANITY_DATASET,
       useCdn: false,
       apiVersion: "2025-01-28",
       studioBasePath: "/studio",
