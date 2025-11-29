@@ -20,10 +20,22 @@ export async function getStaticPaths() {
   });
 }
 
+// Zorg dat deze route SSR is (niet statisch)
+export const prerender = false;
+
 const { params } = Astro;
+// Gebruik Astro.request.url voor query parameters in SSR mode
+const requestUrl = new URL(Astro.request.url);
+console.log("Post page Debug:", {
+  requestUrl: Astro.request.url,
+  parsedUrl: requestUrl.toString(),
+  searchParams: Object.fromEntries(requestUrl.searchParams),
+  hasPreview: requestUrl.searchParams.has("preview"),
+});
 const { data: post } = await loadQuery<{ title: string; body: any[] }>({
   query: postBySlugQuery,
   params,
+  searchParams: requestUrl.searchParams,
 });
 ---
 

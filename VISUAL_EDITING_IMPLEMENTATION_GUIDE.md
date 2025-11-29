@@ -45,6 +45,7 @@ SANITY_API_READ_TOKEN=your-read-token
 ```
 
 **Belangrijk:**
+
 - `PUBLIC_SANITY_VISUAL_EDITING_ENABLED` moet `"true"` zijn om Visual Editing te activeren
 - `SANITY_API_READ_TOKEN` is alleen nodig wanneer Visual Editing is ingeschakeld
 - Zet `PUBLIC_SANITY_VISUAL_EDITING_ENABLED=false` in productie tenzij je Visual Editing actief wilt hebben
@@ -83,24 +84,34 @@ export default defineConfig({
 
 ## Stap 4: Load Query Functie Aanpassen
 
-Creëer of update `src/sanity/lib/load-query.ts` met Visual Editing support:
+Creëer of update `src/sanity/lib/load-query.ts` met Visual Editing support en URL parameter fallback:
 
 ```typescript
 // src/sanity/lib/load-query.ts
 import { type QueryParams } from "sanity";
 import { sanityClient } from "sanity:client";
 
-const visualEditingEnabled =
+const envVisualEditingEnabled =
   import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === "true";
 const token = import.meta.env.SANITY_API_READ_TOKEN;
 
 export async function loadQuery<QueryResponse>({
   query,
   params,
+  searchParams,
 }: {
   query: string;
   params?: QueryParams;
+  searchParams?: URLSearchParams;
 }) {
+  // Check URL parameter als fallback (voor productie)
+  const urlPreviewEnabled = searchParams?.get("preview") === "true";
+
+  // Visual editing enabled wanneer:
+  // - Environment variable is true, OF
+  // - URL parameter preview=true is aanwezig
+  const visualEditingEnabled = envVisualEditingEnabled || urlPreviewEnabled;
+
   // Validatie: token is vereist wanneer Visual Editing is ingeschakeld
   if (visualEditingEnabled && !token) {
     throw new Error(
@@ -135,6 +146,7 @@ export async function loadQuery<QueryResponse>({
 ```
 
 **Belangrijke punten:**
+
 - `perspective: "previewDrafts"` toont draft content tijdens Visual Editing
 - `resultSourceMap: "withKeyArraySelector"` is vereist voor Visual Editing
 - `stega: true` voegt metadata toe aan responses
@@ -201,21 +213,33 @@ export const resolve: PresentationPluginOptions["resolve"] = {
 ```
 
 **Belangrijk:**
+
 - Elke document type die je wilt previewen moet hier gedefinieerd zijn
 - De `href` moet overeenkomen met je Astro routes
 - De `select` fields moeten overeenkomen met je schema
 
 ## Stap 7: VisualEditing Component Toevoegen
 
-Voeg de `VisualEditing` component toe aan je hoofd layout:
+Voeg de `VisualEditing` component toe aan je hoofd layout met URL parameter support:
 
 ```astro
 ---
 // src/layouts/Layout.astro
 import { VisualEditing } from "@sanity/astro/visual-editing";
 
-const visualEditingEnabled =
+// Check environment variable (eerste prioriteit)
+const envVisualEditingEnabled =
   import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
+
+// Check URL parameter als fallback (voor productie)
+// Gebruik Astro.request.url voor query parameters in SSR mode
+const requestUrl = new URL(Astro.request.url);
+const urlPreviewEnabled = requestUrl.searchParams.get("preview") === "true";
+
+// Visual editing enabled wanneer:
+// - Environment variable is true, OF
+// - URL parameter preview=true is aanwezig
+const visualEditingEnabled = envVisualEditingEnabled || urlPreviewEnabled;
 ---
 
 <!doctype html>
@@ -231,23 +255,33 @@ const visualEditingEnabled =
 ```
 
 **Belangrijk:**
+
 - De component moet in de layout staan, niet in individuele pages
-- Gebruik dezelfde environment variable check als in `load-query.ts`
+- Gebruik `Astro.request.url` voor query parameters in SSR mode
+- Visual editing werkt nu via environment variable OF via `?preview=true` in de URL
 - De component is alleen actief wanneer `enabled={true}`
 
 ## Stap 8: Data Fetching Aanpassen
 
-Zorg dat alle Sanity queries via `loadQuery` gaan:
+Zorg dat alle Sanity queries via `loadQuery` gaan en geef query parameters door:
 
 ```astro
 ---
 // src/pages/example.astro
+// Zorg dat deze route SSR is (niet statisch)
+export const prerender = false;
+
 import { loadQuery } from "../sanity/lib/load-query";
 import { myQuery } from "../sanity/lib/queries";
 
+// Gebruik Astro.request.url voor query parameters in SSR mode
+const requestUrl = new URL(Astro.request.url);
 const { data } = await loadQuery({
   query: myQuery,
-  params: { /* optioneel */ },
+  params: {
+    /* optioneel */
+  },
+  searchParams: requestUrl.searchParams,
 });
 ---
 
@@ -255,29 +289,72 @@ const { data } = await loadQuery({
 ```
 
 **Belangrijk:**
-- Gebruik ALTIJD `loadQuery` in plaats van direct `client.fetch()`
-- Dit zorgt ervoor dat Visual Editing correct werkt
-- Draft content wordt automatisch getoond wanneer Visual Editing actief is
 
-## Stap 9: Testing
+- Gebruik ALTIJD `loadQuery` in plaats van direct `client.fetch()`
+- Voeg `export const prerender = false` toe aan routes die preview mode moeten ondersteunen
+- Geef `searchParams` door aan `loadQuery` zodat URL parameters worden herkend
+- Draft content wordt automatisch getoond wanneer Visual Editing actief is (via env of URL parameter)
+- Behoud preview parameter in links: `href={`/post/${slug}${requestUrl.searchParams.has('preview') ? '?preview=true' : ''}`}`
+
+## Stap 9: Preview Mode via URL Parameter
+
+Visual Editing kan worden geactiveerd via een URL parameter, wat handig is voor productie zonder environment variables aan te passen.
+
+### Hoe het werkt:
+
+1. **Environment Variable (eerste prioriteit):**
+   - Zet `PUBLIC_SANITY_VISUAL_EDITING_ENABLED=true` in development
+   - Visual editing is dan altijd actief
+
+2. **URL Parameter (fallback voor productie):**
+   - Voeg `?preview=true` toe aan elke URL
+   - Bijvoorbeeld: `https://yoursite.com/post/example?preview=true`
+   - Visual editing wordt automatisch geactiveerd
+   - Werkt ook op de homepage: `https://yoursite.com/?preview=true`
+
+### Implementatie Details:
+
+- **Layout.astro**: Controleert zowel env variable als URL parameter
+- **load-query.ts**: Accepteert `searchParams` en gebruikt deze voor preview detection
+- **Pages**: Moeten `export const prerender = false` hebben voor SSR mode
+- **Links**: Behoud preview parameter wanneer actief
+
+### Voorbeeld voor Links:
+
+```astro
+// Behoud preview parameter in links const requestUrl = new
+URL(Astro.request.url);
+<a
+  href={`/post/${slug}${requestUrl.searchParams.has("preview") ? "?preview=true" : ""}`}
+>
+  {title}
+</a>
+```
+
+## Stap 10: Testing
 
 ### Lokaal Testen
 
-1. Zet `PUBLIC_SANITY_VISUAL_EDITING_ENABLED=true` in je `.env`
+1. Zet `PUBLIC_SANITY_VISUAL_EDITING_ENABLED=true` in je `.env` (optioneel)
 2. Zorg dat `SANITY_API_READ_TOKEN` is ingesteld
 3. Start je dev server: `npm run dev`
-4. Open Sanity Studio: `http://localhost:4321/studio`
-5. Open Presentation tool in Studio
-6. Selecteer een document en klik op "Open preview"
-7. Je zou nu Visual Editing moeten zien werken
+4. Test met environment variable: Visual editing zou automatisch actief moeten zijn
+5. Test met URL parameter: `http://localhost:4321/post/example-post?preview=true`
+6. Open Sanity Studio: `http://localhost:4321/studio`
+7. Open Presentation tool in Studio
+8. Selecteer een document en klik op "Open preview"
+9. Je zou nu Visual Editing moeten zien werken
 
 ### Productie
 
 - Zet `PUBLIC_SANITY_VISUAL_EDITING_ENABLED=false` in productie
-- Of gebruik environment-specifieke configuratie
-- Zorg dat `SANITY_API_READ_TOKEN` alleen beschikbaar is waar nodig
+- Visual editing kan nu geactiveerd worden via `?preview=true` in de URL
+- Dit maakt het mogelijk om preview mode te gebruiken zonder environment variables aan te passen
+- Zorg dat `SANITY_API_READ_TOKEN` beschikbaar is in productie (als environment variable)
+- Gebruik: `https://yoursite.com/post/example?preview=true` om preview mode te activeren
+- Links behouden automatisch de preview parameter wanneer je navigeert
 
-## Stap 10: Troubleshooting
+## Stap 11: Troubleshooting
 
 ### Visual Editing werkt niet
 
@@ -355,4 +432,3 @@ const { data } = await loadQuery({
 - [Sanity Visual Editing Docs](https://www.sanity.io/docs/visual-editing)
 - [Sanity Presentation Tool](https://www.sanity.io/docs/presentation-tool)
 - [Astro Sanity Integration](https://www.sanity.io/docs/astro-integration)
-
