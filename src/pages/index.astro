@@ -1,12 +1,18 @@
 ---
+// Zorg dat deze route SSR is (niet statisch)
+export const prerender = false;
+
 import type { SanityDocument } from "@sanity/client";
 import { loadQuery } from "../sanity/lib/load-query";
 import { urlForImage } from "../sanity/lib/url-for-image";
 import { postsQuery } from "../sanity/lib/queries";
 import Layout from "../layouts/Layout.astro";
 
+// Gebruik Astro.request.url voor query parameters in SSR mode
+const requestUrl = new URL(Astro.request.url);
 const { data: posts } = await loadQuery<SanityDocument[]>({
   query: postsQuery,
+  searchParams: requestUrl.searchParams,
 });
 ---
 
@@ -19,7 +25,7 @@ const { data: posts } = await loadQuery<SanityDocument[]>({
           <article class="post-card">
             {post.mainImage && (
               <a
-                href={`/post/${post.slug.current}`}
+                href={`/post/${post.slug.current}${requestUrl.searchParams.has("preview") ? "?preview=true" : ""}`}
                 class="post-card__image-link"
               >
                 <img
@@ -31,7 +37,11 @@ const { data: posts } = await loadQuery<SanityDocument[]>({
             )}
             <div class="post-card__content">
               <h2 class="post-card__title">
-                <a href={`/post/${post.slug.current}`}>{post.title}</a>
+                <a
+                  href={`/post/${post.slug.current}${requestUrl.searchParams.has("preview") ? "?preview=true" : ""}`}
+                >
+                  {post.title}
+                </a>
               </h2>
               {post.author && (
                 <p class="post-card__author">Door {post.author.name}</p>

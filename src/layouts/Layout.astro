@@ -4,8 +4,30 @@ import "@fontsource-variable/instrument-sans";
 import "../assets/scss/globals.scss";
 import { VisualEditing } from "@sanity/astro/visual-editing";
 
-const visualEditingEnabled =
+// Check environment variable (eerste prioriteit)
+const envVisualEditingEnabled =
   import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
+
+// Check URL parameter als fallback (voor productie)
+// Gebruik Astro.request.url voor query parameters in SSR mode
+const requestUrl = new URL(Astro.request.url);
+console.log("Layout Debug - request.url:", Astro.request.url);
+console.log("Layout Debug - requestUrl.toString():", requestUrl.toString());
+const urlPreviewEnabled = requestUrl.searchParams.get("preview") === "true";
+
+// Visual editing enabled wanneer:
+// - Environment variable is true, OF
+// - URL parameter preview=true is aanwezig
+const visualEditingEnabled = envVisualEditingEnabled || urlPreviewEnabled;
+
+// Debug logging (verwijder dit later)
+console.log("Visual Editing Debug:", {
+  envVisualEditingEnabled,
+  urlPreviewEnabled,
+  visualEditingEnabled,
+  url: requestUrl.toString(),
+  searchParams: Object.fromEntries(requestUrl.searchParams),
+});
 ---
 
 <!doctype html>
