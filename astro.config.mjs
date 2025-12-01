@@ -2,7 +2,7 @@
 import { defineConfig } from "astro/config";
 import sanity from "@sanity/astro";
 import react from "@astrojs/react";
-// import netlify from "@astrojs/netlify";
+import netlify from "@astrojs/netlify";
 
 import { loadEnv } from "vite";
 const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } = loadEnv(
@@ -27,7 +27,7 @@ export default defineConfig({
 
     react(),
   ],
-  // adapter: netlify(),
+  
 
    // Vite configuratie voor Sanity dependencies
   vite: {
@@ -55,5 +55,7 @@ export default defineConfig({
       },
     },
   },
+
+  adapter: netlify(),
   
 });
