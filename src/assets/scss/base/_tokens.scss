@@ -1,51 +1,17 @@
 :root {
-  /* OKLCH Color Palettes */
-  --primary: oklch(56.6% 0.27 274);
-  --primary-10: oklch(from var(--primary) 10% c h);
-  --primary-20: oklch(from var(--primary) 20% c h);
-  --primary-30: oklch(from var(--primary) 30% c h);
-  --primary-40: oklch(from var(--primary) 40% c h);
-  --primary-50: oklch(from var(--primary) 50% c h);
-  --primary-60: oklch(from var(--primary) 60% c h);
-  --primary-70: oklch(from var(--primary) 70% c h);
-  --primary-80: oklch(from var(--primary) 80% c h);
-  --primary-90: oklch(from var(--primary) 90% c h);
-  --primary-100: oklch(from var(--primary) 100% c h);
-
-  --secondary: oklch(56.6% 0.27 180);
-  --secondary-10: oklch(from var(--secondary) 10% c h);
-  --secondary-20: oklch(from var(--secondary) 20% c h);
-  --secondary-30: oklch(from var(--secondary) 30% c h);
-  --secondary-40: oklch(from var(--secondary) 40% c h);
-  --secondary-50: oklch(from var(--secondary) 50% c h);
-  --secondary-60: oklch(from var(--secondary) 60% c h);
-  --secondary-70: oklch(from var(--secondary) 70% c h);
-  --secondary-80: oklch(from var(--secondary) 80% c h);
-  --secondary-90: oklch(from var(--secondary) 90% c h);
-  --secondary-100: oklch(from var(--secondary) 100% c h);
-
-  /* Text and Background as tints of primary */
-  --color-text: oklch(from var(--primary) 25% c h);
-  --color-bg: oklch(from var(--primary) 98% c h);
-  --color-surface: oklch(from var(--primary) 96% c h);
-  --color-border: oklch(from var(--primary) 85% c h);
-  --color-muted: oklch(from var(--primary) 45% c h);
-
-  /* Legacy HSL Brand (for backwards compatibility) */
-  --color-brand-500: hsl(221 78% 58%);
-  --color-brand-400: hsl(221 85% 65%);
-  --color-brand-600: hsl(221 70% 50%);
-
-  /* Feedback Colors */
-  --color-success: hsl(145 70% 45%);
-  --color-warning: hsl(42 90% 55%);
-  --color-error: hsl(4 75% 55%);
+  /* Semantic Color Tokens */
+  --color-text: var(--primary-900);
+  --color-bg: var(--primary-50);
+  --color-surface: var(--primary-100);
+  --color-border: var(--primary-300);
+  --color-muted: var(--primary-700);
 
   /* Design Tokens */
-  --radius-small: 3px;
-  --radius-large: 6px;
+  --radius-small: 0.25rem;
+  --radius-large: 0.5rem;
+  --radius-full: 100vw;
   --gap-default: var(--space-s);
-  --font-measure: 70ch;
+  --font-measure: 50ch;
 
   /* Font Families */
   --font-family-default:
@@ -54,49 +20,15 @@
   --font-family-special: "Instrument Serif", serif;
   --font-mono: "Geist Mono Variable", monospace;
 
-  /* Legacy Colors (for backwards compatibility) */
-  --bg: var(--color-bg);
-  --white: var(--color-bg);
-  --black: var(--color-text);
-  --grey--dark: var(--color-muted);
+
 }
 
 /* Dark Mode via data-theme attribute */
 :root[data-theme="dark"] {
-  /* Primary palette adjusted for dark mode */
-  --primary: oklch(65% 0.27 274);
-  --primary-10: oklch(from var(--primary) 10% c h);
-  --primary-20: oklch(from var(--primary) 20% c h);
-  --primary-30: oklch(from var(--primary) 30% c h);
-  --primary-40: oklch(from var(--primary) 40% c h);
-  --primary-50: oklch(from var(--primary) 50% c h);
-  --primary-60: oklch(from var(--primary) 60% c h);
-  --primary-70: oklch(from var(--primary) 70% c h);
-  --primary-80: oklch(from var(--primary) 80% c h);
-  --primary-90: oklch(from var(--primary) 90% c h);
-  --primary-100: oklch(from var(--primary) 100% c h);
-
-  /* Secondary palette adjusted for dark mode */
-  --secondary: oklch(65% 0.27 180);
-  --secondary-10: oklch(from var(--secondary) 10% c h);
-  --secondary-20: oklch(from var(--secondary) 20% c h);
-  --secondary-30: oklch(from var(--secondary) 30% c h);
-  --secondary-40: oklch(from var(--secondary) 40% c h);
-  --secondary-50: oklch(from var(--secondary) 50% c h);
-  --secondary-60: oklch(from var(--secondary) 60% c h);
-  --secondary-70: oklch(from var(--secondary) 70% c h);
-  --secondary-80: oklch(from var(--secondary) 80% c h);
-  --secondary-90: oklch(from var(--secondary) 90% c h);
-  --secondary-100: oklch(from var(--secondary) 100% c h);
-
-  /* Text and Background as tints of primary (dark mode) */
-  --color-text: oklch(from var(--primary) 96% c h);
-  --color-bg: oklch(from var(--primary) 10% c h);
-  --color-surface: oklch(from var(--primary) 14% c h);
-  --color-border: oklch(from var(--primary) 25% c h);
-  --color-muted: oklch(from var(--primary) 65% c h);
-
-  /* Legacy colors for dark mode */
-  --white: var(--color-bg);
-  --black: var(--color-text);
+  /* Semantic Color Tokens (dark mode) */
+  --color-text: var(--primary-900);
+  --color-bg: var(--primary-50);
+  --color-surface: var(--primary-100);
+  --color-border: var(--primary-200);
+  --color-muted: var(--primary-700);
 }
