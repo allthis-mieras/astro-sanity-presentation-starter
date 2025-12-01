@@ -63,17 +63,17 @@ p {
 }
 
 a {
-  color: var(--primary-50);
+  color: var(--primary-600);
   text-decoration: underline;
   text-underline-offset: 0.125em;
   transition: color 0.2s ease;
 
   &:hover {
-    color: var(--primary-60);
+    color: var(--primary-500);
   }
 
   &:focus {
-    outline: 2px solid var(--primary-50);
+    outline: 2px solid var(--primary-600);
     outline-offset: 2px;
   }
 }
@@ -116,7 +116,7 @@ pre {
 }
 
 blockquote {
-  border-left: 4px solid var(--color-brand-500);
+  border-left: 4px solid var(--primary-500);
   padding-left: 1em;
   margin-left: 0;
   margin-bottom: 1em;

@@ -8,3 +8,4 @@
   # Exclude build output and other paths from scanning
   SECRETS_SCAN_OMIT_PATHS = "dist/,.netlify/,.cursor/"
 
+
