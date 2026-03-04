@@ -1,0 +1,98 @@
+:root {
+  /* Base Finland Colors */
+  --finland-blue: #002EA2;
+  --finland-white: #FFFFFF;
+  --finland-evergreen: #055A26;
+  --finland-winter-grey: #E8E7E2;
+  --finald-lake-blue: #91ACFF;
+  --finland-fresh-green: #96DD5F;
+
+  /* OKLCH Color Palettes - Tailwind-style scale (50 = lichtst, 950 = donkerst) */
+  --primary: var(--finland-blue);
+  --primary-50: oklch(from var(--primary) 98% c h);
+  --primary-100: oklch(from var(--primary) 96% c h);
+  --primary-200: oklch(from var(--primary) 90% c h);
+  --primary-300: oklch(from var(--primary) 85% c h);
+  --primary-400: oklch(from var(--primary) 70% c h);
+  --primary-500: oklch(from var(--primary) 56.6% c h);
+  --primary-600: oklch(from var(--primary) 50% c h);
+  --primary-700: oklch(from var(--primary) 45% c h);
+  --primary-800: oklch(from var(--primary) 30% c h);
+  --primary-900: oklch(from var(--primary) 25% c h);
+  --primary-950: oklch(from var(--primary) 10% c h);
+
+  --secondary: var(--finland-evergreen);
+  --secondary-50: oklch(from var(--secondary) 98% c h);
+  --secondary-100: oklch(from var(--secondary) 96% c h);
+  --secondary-200: oklch(from var(--secondary) 90% c h);
+  --secondary-300: oklch(from var(--secondary) 85% c h);
+  --secondary-400: oklch(from var(--secondary) 70% c h);
+  --secondary-500: oklch(from var(--secondary) 56.6% c h);
+  --secondary-600: oklch(from var(--secondary) 50% c h);
+  --secondary-700: oklch(from var(--secondary) 45% c h);
+  --secondary-800: oklch(from var(--secondary) 30% c h);
+  --secondary-900: oklch(from var(--secondary) 25% c h);
+  --secondary-950: oklch(from var(--secondary) 10% c h);
+
+  --neutral: var(--finland-winter-grey);
+  --neutral-50: oklch(from var(--neutral) 98% c h);
+  --neutral-100: oklch(from var(--neutral) 96% c h);
+  --neutral-200: oklch(from var(--neutral) 90% c h);
+  --neutral-300: oklch(from var(--neutral) 85% c h);
+  --neutral-400: oklch(from var(--neutral) 70% c h);
+  --neutral-500: oklch(from var(--neutral) 56.6% c h);
+  --neutral-600: oklch(from var(--neutral) 50% c h);
+  --neutral-700: oklch(from var(--neutral) 45% c h);
+  --neutral-800: oklch(from var(--neutral) 30% c h);
+  --neutral-900: oklch(from var(--neutral) 25% c h);
+  --neutral-950: oklch(from var(--neutral) 10% c h);
+
+  --accent: var(--finland-fresh-green);
+  --accent-50: oklch(from var(--accent) 98% c h);
+  --accent-100: oklch(from var(--accent) 96% c h);
+  --accent-200: oklch(from var(--accent) 90% c h);
+  --accent-300: oklch(from var(--accent) 85% c h);
+  --accent-400: oklch(from var(--accent) 70% c h);
+  --accent-500: oklch(from var(--accent) 56.6% c h);
+  --accent-600: oklch(from var(--accent) 50% c h);
+  --accent-700: oklch(from var(--accent) 45% c h);
+  --accent-800: oklch(from var(--accent) 30% c h);
+  --accent-900: oklch(from var(--accent) 25% c h);
+  --accent-950: oklch(from var(--accent) 10% c h);
+
+  /* Feedback Colors */
+  --color-success: hsl(145 70% 45%);
+  --color-warning: hsl(42 90% 55%);
+  --color-error: hsl(4 75% 55%);
+}
+
+/* Dark Mode via data-theme attribute */
+:root[data-theme="dark"] {
+  /* Primary palette adjusted for dark mode - omgekeerde schaal (50 = donkerst, 950 = lichtst) */
+  --primary: oklch(65% 0.27 274);
+  --primary-50: oklch(from var(--primary) 10% c h);
+  --primary-100: oklch(from var(--primary) 14% c h);
+  --primary-200: oklch(from var(--primary) 25% c h);
+  --primary-300: oklch(from var(--primary) 30% c h);
+  --primary-400: oklch(from var(--primary) 50% c h);
+  --primary-500: oklch(from var(--primary) 65% c h);
+  --primary-600: oklch(from var(--primary) 70% c h);
+  --primary-700: oklch(from var(--primary) 80% c h);
+  --primary-800: oklch(from var(--primary) 85% c h);
+  --primary-900: oklch(from var(--primary) 96% c h);
+  --primary-950: oklch(from var(--primary) 98% c h);
+
+  /* Secondary palette adjusted for dark mode */
+  --secondary: oklch(65% 0.27 180);
+  --secondary-50: oklch(from var(--secondary) 10% c h);
+  --secondary-100: oklch(from var(--secondary) 14% c h);
+  --secondary-200: oklch(from var(--secondary) 25% c h);
+  --secondary-300: oklch(from var(--secondary) 30% c h);
+  --secondary-400: oklch(from var(--secondary) 50% c h);
+  --secondary-500: oklch(from var(--secondary) 65% c h);
+  --secondary-600: oklch(from var(--secondary) 70% c h);
+  --secondary-700: oklch(from var(--secondary) 80% c h);
+  --secondary-800: oklch(from var(--secondary) 85% c h);
+  --secondary-900: oklch(from var(--secondary) 96% c h);
+  --secondary-950: oklch(from var(--secondary) 98% c h);
+}

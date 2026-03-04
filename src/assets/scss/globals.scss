@@ -1,5 +1,6 @@
 // Base styles (import order matters)
 @use "base/reset";
+@use "base/colors";
 @use "base/tokens";
 @use "base/utopia";
 @use "base/font";
