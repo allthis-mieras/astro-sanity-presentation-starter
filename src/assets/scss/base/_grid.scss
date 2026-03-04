@@ -1,55 +1,59 @@
 // Responsive Breakout Grid System
 
+.page-layout>*,
+.full-width>* {
+  grid-column: content;
+  background: var(--debug);
+
+}
+
+.page-layout>* {
+  margin-block: var(--space-l);
+}
+
+.full>* {
+  background: var(--debug);
+}
+
 .page-layout,
 .full-width {
   --minimum-content-padding: 1rem;
-  --full-max-width: 1fr;
 
-  /* Clamp-based max-widths */
-  --page-max-width: clamp(
-    768px,
-    calc(100vw - 4rem),
-    calc(100vw - var(--space-2xl))
-  );
+
+  --full-max-width: 1fr;
+  /** pixels **/
+  --page-max-width: 1304px;
+  --feature-max-width: 1080px;
+  --popout-max-width: 840px;
+  --content-max-width: 632px;
+  --inset-content-max-width: 408px;
+  /* Percentages */
+  --page-max-width: 86.24%;
+  --feature-max-width: 71.43%;
+  --popout-max-width: 55.56%;
+  --content-max-width: 41.81%;
+  --inset-content-max-width: 26.98%;
+  /* Clamp */
+  --page-max-width: clamp(768px, calc(100vw - 4rem), calc(100vw - var(--space-2xl)));
   --feature-max-width: clamp(720px, 71.43vw, 71.43%);
   --popout-max-width: clamp(640px, 55.56vw, 55.56%);
   --content-max-width: clamp(480px, 41.81vw, 41.81%);
   --inset-content-max-width: clamp(420px, 26.98vw, 26.98%);
 
-  /* Track Sizes */
+  /** TRACK SIZES **/
   --full: minmax(var(--minimum-content-padding), 1fr);
-  --page: minmax(
-    0,
-    calc((var(--page-max-width) - var(--feature-max-width)) * 0.5)
-  );
-  --feature: minmax(
-    0,
-    calc((var(--feature-max-width) - var(--popout-max-width)) * 0.5)
-  );
-  --popout: minmax(
-    0,
-    calc((var(--popout-max-width) - var(--content-max-width)) * 0.5)
-  );
-  --content: minmax(
-    0,
-    calc((var(--content-max-width) - var(--inset-content-max-width)) * 0.5)
-  );
-  --inset-content: min(
-    var(--inset-content-max-width),
-    100% - var(--minimum-content-padding) * 2
-  );
+  --page: minmax(0, calc((var(--page-max-width) - var(--feature-max-width)) * 0.5));
+  --feature: minmax(0, calc((var(--feature-max-width) - var(--popout-max-width)) * 0.5));
+  --popout: minmax(0, calc((var(--popout-max-width) - var(--content-max-width)) * 0.5));
+  --content: minmax(0, calc((var(--content-max-width) - var(--inset-content-max-width)) * 0.5));
+  --inset-content: min(var(--inset-content-max-width), 100% - var(--minimum-content-padding) * 2);
 
   display: grid;
   grid-template-columns:
-    [full-start] var(--full) [page-start] var(--page)
-    [feature-start] var(--feature) [popout-start] var(--popout)
-    [content-start] var(--content) [inset-content-start] var(--inset-content)
-    [inset-content-end] var(--content) [content-end] var(--popout)
-    [popout-end] var(--feature) [feature-end] var(--page) [page-end] var(--full)
-    [full-end];
+    [full-start] var(--full) [page-start] var(--page) [feature-start] var(--feature) [popout-start] var(--popout) [content-start] var(--content) [inset-content-start] var(--inset-content) [inset-content-end] var(--content) [content-end] var(--popout) [popout-end] var(--feature) [feature-end] var(--page) [page-end] var(--full) [full-end];
 }
 
-/* Grid Column Classes */
+/** CLASSES **/
 .full {
   grid-column: full;
 }
@@ -135,12 +139,27 @@
   padding-inline: var(--minimum-content-padding);
 }
 
-/* Page Layout Specific */
-.page-layout > *,
-.full-width > * {
+.full {
+  grid-column: full;
+  background: var(--debug);
+}
+
+.page {
+  grid-column: page;
+}
+
+.feature {
+  grid-column: feature;
+}
+
+.popout {
+  grid-column: popout;
+}
+
+.content {
   grid-column: content;
 }
 
-.page-layout > * {
-  margin-block: var(--space-l);
+.inset-content {
+  grid-column: inset-content;
 }
